@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening Test - Cambridge YLE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f4c81 0%, #1e88e5 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: #1e88e5;
+        }
+
+        .test-info h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .test-info p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4caf50;
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .audio-player {
+            background: #f8f9fa;
+            padding: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .audio-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .audio-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .audio-btn.play {
+            width: 60px;
+            height: 60px;
+            font-size: 2rem;
+        }
+
+        .audio-timeline {
+            flex: 1;
+            min-width: 200px;
+            height: 8px;
+            background: #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .audio-progress {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.1s;
+        }
+
+        .audio-time {
+            font-size: 0.9rem;
+            color: #666;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .part-header {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .part-header h2 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .part-header p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .question-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .names-bank {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .name-item {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            cursor: move;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .name-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .name-item.dragging {
+            opacity: 0.5;
+        }
+
+        .name-item.used {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .matching-area {
+            display: grid;
+            gap: 20px;
+        }
+
+        .match-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .match-label {
+            font-size: 1.1rem;
+            color: #333;
+            min-width: 150px;
+            flex-shrink: 0;
+        }
+
+        .drop-zone {
+            flex: 1;
+            min-height: 60px;
+            border: 3px dashed #ddd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            padding: 10px;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #667eea;
+            background: #e8eaf6;
+        }
+
+        .drop-zone.filled {
+            border-style: solid;
+            border-color: #4caf50;
+        }
+
+        .dropped-name {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .remove-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remove-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .feedback-section {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            border-radius: 15px;
+            background: white;
+        }
+
+        .feedback-section.show {
+            display: block;
+        }
+
+        .score-display {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .score-display h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .score-display p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .answer-review {
+            display: grid;
+            gap: 15px;
+        }
+
+        .answer-item {
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ddd;
+        }
+
+        .answer-item.correct {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+
+        .answer-item.incorrect {
+            background: #ffebee;
+            border-color: #f44336;
+        }
+
+        .answer-item h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .answer-item p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-left {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .audio-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .match-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .match-label {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <a href="test-selection.html" class="back-btn">← Back</a>
+                <div class="test-info">
+                    <h1 id="testTitle">Listening Test</h1>
+                    <p id="testSubtitle">Part 1 of 5</p>
+                </div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 20%"></div>
+                </div>
+                <div class="progress-text">1/5 Questions</div>
+            </div>
+        </div>
+
+        <div class="audio-player">
+            <div class="audio-controls">
+                <button class="audio-btn" onclick="rewind()" title="Rewind 10 seconds">⏪</button>
+                <button class="audio-btn play" id="playBtn" onclick="togglePlay()" title="Play/Pause">▶</button>
+                <button class="audio-btn" onclick="forward()" title="Forward 10 seconds">⏩</button>
+                <div class="audio-timeline" id="timeline" onclick="seekAudio(event)">
+                    <div class="audio-progress" id="audioProgress"></div>
+                </div>
+                <div class="audio-time" id="timeDisplay">0:00 / 0:00</div>
+            </div>
+            <audio id="audioPlayer" style="display: none;">
+                <source src="../assets/audio/sample-listening.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <div class="content">
+            <div class="part-header">
+                <h2>Part 1 - Listen and Match Names</h2>
+                <p>🎧 Listen to the audio and drag each name to the correct person in the picture. There is one example.</p>
+            </div>
+
+            <div class="question-container">
+                <img src="https://via.placeholder.com/800x400/84fab0/333333?text=Listening+Test+Image+(camping+scene)" alt="Test Image" class="question-image">
+                
+                <div class="names-bank" id="namesBank">
+                    <div class="name-item" draggable="true" data-name="Katy">Katy</div>
+                    <div class="name-item" draggable="true" data-name="Robert">Robert</div>
+                    <div class="name-item" draggable="true" data-name="Oliver">Oliver</div>
+                    <div class="name-item" draggable="true" data-name="Emma">Emma</div>
+                    <div class="name-item" draggable="true" data-name="Jack">Jack</div>
+                </div>
+
+                <div class="matching-area">
+                    <div class="match-item">
+                        <div class="match-label">Person at the tent:</div>
+                        <div class="drop-zone" data-target="person1"></div>
+                    </div>
+                    <div class="match-item">
+                        <div class="match-label">Person by the fire:</div>
+                        <div class="drop-zone" data-target="person2"></div>
+                    </div>
+                    <div class="match-item">
+                        <div class="match-label">Person fishing:</div>
+                        <div class="drop-zone" data-target="person3"></div>
+                    </div>
+                    <div class="match-item">
+                        <div class="match-label">Person reading:</div>
+                        <div class="drop-zone" data-target="person4"></div>
+                    </div>
+                    <div class="match-item">
+                        <div class="match-label">Person cooking:</div>
+                        <div class="drop-zone" data-target="person5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="resetAnswers()">Reset Answers</button>
+                <button class="btn btn-primary" onclick="checkAnswers()">Check Answers</button>
+            </div>
+
+            <div class="feedback-section" id="feedbackSection">
+                <div class="score-display">
+                    <h2 id="scoreText">Score: 0/5</h2>
+                    <p id="scoreMessage">Great job! Keep practicing!</p>
+                </div>
+
+                <div class="answer-review" id="answerReview"></div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="tryAgain()">Try Again</button>
+                    <button class="btn btn-success" onclick="nextPart()">Next Part →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Audio player functionality
+        const audio = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const timeline = document.getElementById('timeline');
+        const audioProgress = document.getElementById('audioProgress');
+        const timeDisplay = document.getElementById('timeDisplay');
+
+        let isPlaying = false;
+
+        function togglePlay() {
+            if (isPlaying) {
+                audio.pause();
+                playBtn.textContent = '▶';
+            } else {
+                audio.play();
+                playBtn.textContent = '⏸';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function rewind() {
+            audio.currentTime = Math.max(0, audio.currentTime - 10);
+        }
+
+        function forward() {
+            audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+        }
+
+        function seekAudio(e) {
+            const rect = timeline.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            if (!isNaN(audio.duration)) {
+                const percent = (audio.currentTime / audio.duration) * 100;
+                audioProgress.style.width = percent + '%';
+                timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            playBtn.textContent = '▶';
+            isPlaying = false;
+        });
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+
+        // Drag and drop functionality
+        let draggedElement = null;
+        const userAnswers = {};
+
+        // Correct answers for demo
+        const correctAnswers = {
+            person1: 'Katy',
+            person2: 'Oliver',
+            person3: 'Robert',
+            person4: 'Emma',
+            person5: 'Jack'
+        };
+
+        // Initialize drag and drop
+        document.querySelectorAll('.name-item').forEach(item => {
+            item.addEventListener('dragstart', handleDragStart);
+            item.addEventListener('dragend', handleDragEnd);
+        });
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', handleDragOver);
+            zone.addEventListener('dragleave', handleDragLeave);
+            zone.addEventListener('drop', handleDrop);
+        });
+
+        function handleDragStart(e) {
+            if (this.classList.contains('used')) return;
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            this.classList.add('drag-over');
+            return false;
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            e.preventDefault();
+
+            this.classList.remove('drag-over');
+
+            if (draggedElement) {
+                const target = this.dataset.target;
+                const name = draggedElement.dataset.name;
+
+                // Remove previous answer if exists
+                if (this.classList.contains('filled')) {
+                    const oldName = this.querySelector('.dropped-name').dataset.name;
+                    document.querySelector(`[data-name="${oldName}"]`).classList.remove('used');
+                }
+
+                // Add new answer
+                this.innerHTML = `
+                    <div class="dropped-name" data-name="${name}">
+                        ${name}
+                        <button class="remove-btn" onclick="removeName(event, '${target}')">×</button>
+                    </div>
+                `;
+                this.classList.add('filled');
+                draggedElement.classList.add('used');
+                userAnswers[target] = name;
+            }
+
+            return false;
+        }
+
+        function removeName(e, target) {
+            e.stopPropagation();
+            const zone = document.querySelector(`[data-target="${target}"]`);
+            const name = zone.querySelector('.dropped-name').dataset.name;
+            
+            zone.innerHTML = '';
+            zone.classList.remove('filled');
+            document.querySelector(`[data-name="${name}"]`).classList.remove('used');
+            delete userAnswers[target];
+        }
+
+        function resetAnswers() {
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.innerHTML = '';
+                zone.classList.remove('filled');
+            });
+            document.querySelectorAll('.name-item').forEach(item => {
+                item.classList.remove('used');
+            });
+            Object.keys(userAnswers).forEach(key => delete userAnswers[key]);
+            document.getElementById('feedbackSection').classList.remove('show');
+        }
+
+        function checkAnswers() {
+            let correct = 0;
+            const total = Object.keys(correctAnswers).length;
+            const reviewHtml = [];
+
+            Object.keys(correctAnswers).forEach(target => {
+                const userAnswer = userAnswers[target];
+                const correctAnswer = correctAnswers[target];
+                const isCorrect = userAnswer === correctAnswer;
+
+                if (isCorrect) correct++;
+
+                reviewHtml.push(`
+                    <div class="answer-item ${isCorrect ? 'correct' : 'incorrect'}">
+                        <h4>${target.replace('person', 'Question ')}</h4>
+                        <p><strong>Your answer:</strong> ${userAnswer || 'Not answered'}</p>
+                        ${!isCorrect ? `<p><strong>Correct answer:</strong> ${correctAnswer}</p>` : ''}
+                        <p>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</p>
+                    </div>
+                `);
+            });
+
+            const percentage = Math.round((correct / total) * 100);
+            document.getElementById('scoreText').textContent = `Score: ${correct}/${total} (${percentage}%)`;
+            
+            let message = '';
+            if (percentage === 100) message = '🎉 Perfect! Excellent work!';
+            else if (percentage >= 80) message = '👏 Great job! Keep it up!';
+            else if (percentage >= 60) message = '👍 Good effort! Practice more!';
+            else message = '💪 Keep practicing! You can do better!';
+            
+            document.getElementById('scoreMessage').textContent = message;
+            document.getElementById('answerReview').innerHTML = reviewHtml.join('');
+            document.getElementById('feedbackSection').classList.add('show');
+            document.getElementById('feedbackSection').scrollIntoView({ behavior: 'smooth' });
+
+            // Save result
+            saveResult(correct, total);
+        }
+
+        function saveResult(correct, total) {
+            const level = localStorage.getItem('currentLevel') || 'flyers';
+            const testNum = localStorage.getItem('currentTest') || 1;
+            const key = `test_${level}_${testNum}_listening`;
+            
+            const result = {
+                score: Math.round((correct / total) * 100),
+                correct: correct,
+                total: total,
+                answers: userAnswers,
+                date: new Date().toISOString(),
+                completed: true
+            };
+            
+            localStorage.setItem(key, JSON.stringify(result));
+        }
+
+        function tryAgain() {
+            resetAnswers();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextPart() {
+            alert('Part 2 coming soon! This would navigate to the next listening part.');
+            // In full implementation: window.location.href = 'listening-part2.html';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const level = localStorage.getItem('currentLevel') || 'flyers';
+            const testNum = localStorage.getItem('currentTest') || 1;
+            document.getElementById('testTitle').textContent = `${level.charAt(0).toUpperCase() + level.slice(1)} - Test ${testNum} - Listening`;
+        });
+    </script>
+</body>
+</html>

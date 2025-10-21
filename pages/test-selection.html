@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Test - Cambridge YLE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f4c81 0%, #1e88e5 100%);
+            color: white;
+            padding: 30px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: #1e88e5;
+        }
+
+        .header-content {
+            flex: 1;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .intro h2 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .intro p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .test-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .test-card.starters {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        }
+
+        .test-card.movers {
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+        }
+
+        .test-card.flyers {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .test-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .test-card.completed {
+            border-color: #4caf50;
+        }
+
+        .test-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .test-label {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .test-status {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .test-status.completed {
+            background: #4caf50;
+            color: white;
+        }
+
+        .test-status.in-progress {
+            background: #ff9800;
+            color: white;
+        }
+
+        .test-sections {
+            margin-top: 40px;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 20px;
+        }
+
+        .test-sections h3 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .section-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .section-card h4 {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .section-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .section-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .section-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-content h3 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .modal-btn.secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .tests-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="../index.html" class="back-btn">← Back to Levels</a>
+            <div class="header-content">
+                <h1 id="levelTitle">Select Your Test</h1>
+                <div class="level-badge" id="levelBadge"></div>
+            </div>
+            <div style="width: 120px;"></div>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Choose a Test Number</h2>
+                <p>Select which test you'd like to practice</p>
+            </div>
+
+            <div class="tests-grid" id="testsGrid"></div>
+
+            <div class="test-sections" id="testSections" style="display: none;">
+                <h3>Test <span id="selectedTestNumber"></span> - Choose Section</h3>
+                <div class="sections-grid">
+                    <div class="section-card">
+                        <div class="section-icon">🎧</div>
+                        <h4>Listening</h4>
+                        <p>Complete the listening comprehension exercises with audio</p>
+                        <button class="section-btn" onclick="startSection('listening')">Start Listening</button>
+                    </div>
+                    <div class="section-card">
+                        <div class="section-icon">📝</div>
+                        <h4>Reading & Writing</h4>
+                        <p>Practice reading comprehension and writing tasks</p>
+                        <button class="section-btn" onclick="startSection('reading-writing')">Start Reading & Writing</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h3>Start Test?</h3>
+            <p id="modalMessage"></p>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn primary" onclick="confirmStart()">Start Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedLevel = '';
+        let selectedTest = 0;
+        let pendingSection = '';
+
+        const levelData = {
+            starters: {
+                title: 'Pre-A1 Starters',
+                badge: 'Beginner Level',
+                tests: 8
+            },
+            movers: {
+                title: 'A1 Movers',
+                badge: 'Elementary Level',
+                tests: 8
+            },
+            flyers: {
+                title: 'A2 Flyers',
+                badge: 'Pre-Intermediate Level',
+                tests: 8
+            }
+        };
+
+        function init() {
+            selectedLevel = localStorage.getItem('selectedLevel') || 'starters';
+            const data = levelData[selectedLevel];
+            
+            document.getElementById('levelTitle').textContent = data.title + ' Tests';
+            document.getElementById('levelBadge').textContent = data.badge;
+            
+            renderTests();
+        }
+
+        function renderTests() {
+            const data = levelData[selectedLevel];
+            const grid = document.getElementById('testsGrid');
+            grid.innerHTML = '';
+
+            for (let i = 1; i <= data.tests; i++) {
+                const testProgress = getTestProgress(selectedLevel, i);
+                const card = document.createElement('div');
+                card.className = `test-card ${selectedLevel} ${testProgress.completed ? 'completed' : ''}`;
+                card.onclick = () => selectTest(i);
+                
+                card.innerHTML = `
+                    <div class="test-number">${i}</div>
+                    <div class="test-label">Test ${i}</div>
+                    <div class="test-status ${testProgress.status}">${testProgress.label}</div>
+                `;
+                
+                grid.appendChild(card);
+            }
+        }
+
+        function getTestProgress(level, testNum) {
+            const key = `test_${level}_${testNum}`;
+            const progress = JSON.parse(localStorage.getItem(key) || '{}');
+            
+            if (progress.completed) {
+                return { completed: true, status: 'completed', label: `✓ ${progress.score || 0}%` };
+            } else if (progress.inProgress) {
+                return { completed: false, status: 'in-progress', label: 'In Progress' };
+            }
+            return { completed: false, status: '', label: 'Not Started' };
+        }
+
+        function selectTest(testNum) {
+            selectedTest = testNum;
+            document.getElementById('selectedTestNumber').textContent = testNum;
+            document.getElementById('testSections').style.display = 'block';
+            document.getElementById('testSections').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function startSection(section) {
+            pendingSection = section;
+            const sectionName = section === 'listening' ? 'Listening' : 'Reading & Writing';
+            document.getElementById('modalMessage').textContent = 
+                `You're about to start the ${sectionName} section of Test ${selectedTest}. Ready?`;
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+
+        function confirmStart() {
+            if (!pendingSection || !selectedTest) return;
+            
+            // Store current test info
+            localStorage.setItem('currentLevel', selectedLevel);
+            localStorage.setItem('currentTest', selectedTest);
+            localStorage.setItem('currentSection', pendingSection);
+            
+            // Navigate to test page
+            window.location.href = `${pendingSection}.html`;
+        }
+
+        init();
+    </script>
+</body>
+</html>

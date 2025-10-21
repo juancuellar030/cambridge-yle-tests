@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambridge YLE Practice Tests</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f4c81 0%, #1e88e5 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .intro h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .intro p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .level-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .level-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .level-card:hover::before {
+            opacity: 1;
+        }
+
+        .level-card.starters {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        }
+
+        .level-card.movers {
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+        }
+
+        .level-card.flyers {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .level-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .level-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .level-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .level-description {
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .test-count {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .features {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+
+        .features h3 {
+            text-align: center;
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-text h4 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .feature-text p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .levels-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="level-icon">🎓</div>
+            <h1>Cambridge YLE Practice Tests</h1>
+            <p>Interactive practice tests for Young Learners</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Choose Your Level</h2>
+                <p>Select the appropriate level to start practicing. Each level includes multiple complete practice tests.</p>
+            </div>
+
+            <div class="levels-grid">
+                <div class="level-card starters" onclick="selectLevel('starters')">
+                    <div class="level-icon">🌱</div>
+                    <h3>Pre-A1 Starters</h3>
+                    <div class="level-tag">Beginner Level</div>
+                    <p class="level-description">Perfect for children just beginning their English learning journey. Tests basic vocabulary and simple phrases.</p>
+                    <div class="test-count">8 Complete Tests Available</div>
+                </div>
+
+                <div class="level-card movers" onclick="selectLevel('movers')">
+                    <div class="level-icon">🚀</div>
+                    <h3>A1 Movers</h3>
+                    <div class="level-tag">Elementary Level</div>
+                    <p class="level-description">For children who can understand basic instructions and participate in simple conversations in English.</p>
+                    <div class="test-count">8 Complete Tests Available</div>
+                </div>
+
+                <div class="level-card flyers" onclick="selectLevel('flyers')">
+                    <div class="level-icon">✈️</div>
+                    <h3>A2 Flyers</h3>
+                    <div class="level-tag">Pre-Intermediate Level</div>
+                    <p class="level-description">For children with strong English skills who can express opinions and describe experiences.</p>
+                    <div class="test-count">8 Complete Tests Available</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <h3>Platform Features</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎧</div>
+                        <div class="feature-text">
+                            <h4>Interactive Listening</h4>
+                            <p>Full audio playback with controls</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📝</div>
+                        <div class="feature-text">
+                            <h4>Reading & Writing</h4>
+                            <p>Complete interactive exercises</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✅</div>
+                        <div class="feature-text">
+                            <h4>Instant Feedback</h4>
+                            <p>Check answers immediately</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-text">
+                            <h4>Progress Tracking</h4>
+                            <p>Monitor your performance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 Cambridge YLE Practice Tests | Built for learners worldwide</p>
+        </div>
+    </div>
+
+    <script>
+        function selectLevel(level) {
+            // Store selected level
+            localStorage.setItem('selectedLevel', level);
+            
+            // Navigate to test selection page
+            window.location.href = 'pages/test-selection.html';
+        }
+    </script>
+</body>
+</html>
