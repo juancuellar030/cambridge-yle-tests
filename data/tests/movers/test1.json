@@ -1,0 +1,172 @@
+{
+  "level": "movers",
+  "testNumber": 1,
+  "readingWriting": {
+    "part1": {
+      "title": "Part 1",
+      "subtitle": "– 5 questions –",
+      "instructions": "Look and read. Choose the correct words and write them on the lines. There is one example.",
+      "wordBank": [
+        {
+          "word": "a clown",
+          "image": "clown.png"
+        },
+        {
+          "word": "mountains",
+          "image": "mountains.png"
+        },
+        {
+          "word": "a forest",
+          "image": "forest.png"
+        },
+        {
+          "word": "a doctor",
+          "image": "doctor.png"
+        },
+        {
+          "word": "cheese",
+          "image": "cheese.png"
+        },
+        {
+          "word": "a picnic",
+          "image": "picnic.png"
+        },
+        {
+          "word": "a film star",
+          "image": "filmstar.png"
+        },
+        {
+          "word": "tea",
+          "image": "tea.png"
+        }
+      ],
+      "example": {
+        "definition": "This is often yellow and many people eat it between some bread.",
+        "answer": "cheese"
+      },
+      "questions": [
+        {
+          "id": 1,
+          "definition": "When you go to a cinema you can see this person.",
+          "answer": "a film star"
+        },
+        {
+          "id": 2,
+          "definition": "Some people like climbing these and you can often see snow on the top.",
+          "answer": "mountains"
+        },
+        {
+          "id": 3,
+          "definition": "This is food that you take to eat outside.",
+          "answer": "a picnic"
+        },
+        {
+          "id": 4,
+          "definition": "This person works in a hospital with people who are sick.",
+          "answer": "a doctor"
+        },
+        {
+          "id": 5,
+          "definition": "There are always lots of trees in this place.",
+          "answer": "a forest"
+        }
+      ]
+    },
+    "part2": {
+      "title": "Part 2",
+      "subtitle": "– 6 questions –",
+      "instructions": "Read the text and choose the best answer.",
+      "image": "part2-scene.png",
+      "dialogue": [
+        {
+          "speaker": "Jim",
+          "line": "Hi, Vicky! Is that your new comic?"
+        },
+        {
+          "speaker": "Vicky",
+          "options": ["A", "B", "C"],
+          "choices": [
+            "It's OK.",
+            "Yes, it is.",
+            "It is mine."
+          ],
+          "correctAnswer": "B"
+        }
+      ],
+      "questions": [
+        {
+          "id": 1,
+          "speaker": "Jim",
+          "line": "What are you reading about?",
+          "options": ["A", "B", "C"],
+          "choices": [
+            "I'm good at drawing.",
+            "What's the matter?",
+            "An old pirate ship."
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": 2,
+          "speaker": "Jim",
+          "line": "Which is the best part of your comic?",
+          "options": ["A", "B", "C"],
+          "choices": [
+            "This page. Look!",
+            "Come on! Here.",
+            "Let's go! Quick!"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": 3,
+          "speaker": "Jim",
+          "line": "Which day do you get your comic?",
+          "options": ["A", "B", "C"],
+          "choices": [
+            "In the afternoon.",
+            "Every Wednesday.",
+            "Not this week."
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": 4,
+          "speaker": "Jim",
+          "line": "Does your dad buy your comic for you?",
+          "options": ["A", "B", "C"],
+          "choices": [
+            "Yes. So do I, Jim.",
+            "They're my mother's.",
+            "I ask my uncle to get it."
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": 5,
+          "speaker": "Jim",
+          "line": "I really like comics.",
+          "options": ["A", "B", "C"],
+          "choices": [
+            "Well, you can read this, too.",
+            "Because I'm on this page.",
+            "I'm sorry. I don't know."
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": 6,
+          "speaker": "Jim",
+          "line": "Can you give me your comic now?",
+          "options": ["A", "B", "C"],
+          "choices": [
+            "Me too! Goodbye!",
+            "All right! Here you are.",
+            "No thank you, Jim!"
+          ],
+          "correctAnswer": "B"
+        }
+      ]
+    }
+  }
+}
