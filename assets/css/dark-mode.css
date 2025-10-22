@@ -1,0 +1,271 @@
+/* Dark Mode Styles */
+
+/* Light mode variables (default) */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-gradient-start: #667eea;
+    --bg-gradient-end: #764ba2;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-light: #555555;
+    --border-color: #e0e0e0;
+    --card-bg: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-hover: rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode variables */
+[data-theme="dark"] {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --bg-gradient-start: #0f3460;
+    --bg-gradient-end: #16213e;
+    --text-primary: #e8e8e8;
+    --text-secondary: #b8b8b8;
+    --text-light: #a0a0a0;
+    --border-color: #2d3748;
+    --card-bg: #16213e;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --shadow-hover: rgba(0, 0, 0, 0.5);
+}
+
+/* Dark mode toggle button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px var(--shadow-hover);
+}
+
+.theme-toggle svg {
+    width: 24px;
+    height: 24px;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover svg {
+    transform: rotate(20deg);
+}
+
+/* Hide moon icon in light mode, sun icon in dark mode */
+[data-theme="light"] .moon-icon,
+[data-theme="dark"] .sun-icon {
+    display: none;
+}
+
+[data-theme="light"] .sun-icon,
+[data-theme="dark"] .moon-icon {
+    display: block;
+}
+
+/* Smooth transitions for theme changes */
+body,
+.container,
+.header,
+.content,
+.level-card,
+.test-card,
+.question-container,
+.match-item,
+.drop-zone,
+.part-header,
+.section-card,
+.feature-item,
+.modal-content,
+.answer-item {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Dark mode specific overrides */
+[data-theme="dark"] body {
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+}
+
+[data-theme="dark"] .container {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .header {
+    background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+}
+
+[data-theme="dark"] .content,
+[data-theme="dark"] .question-container,
+[data-theme="dark"] .features,
+[data-theme="dark"] .test-sections,
+[data-theme="dark"] .action-buttons,
+[data-theme="dark"] .audio-player {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .level-card,
+[data-theme="dark"] .test-card,
+[data-theme="dark"] .section-card,
+[data-theme="dark"] .feature-item,
+[data-theme="dark"] .match-item,
+[data-theme="dark"] .modal-content {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .part-header h2,
+[data-theme="dark"] .intro h2,
+[data-theme="dark"] .level-card h3,
+[data-theme="dark"] .test-card .test-label,
+[data-theme="dark"] .section-card h4,
+[data-theme="dark"] .feature-item h4,
+[data-theme="dark"] .match-label,
+[data-theme="dark"] .answer-item h4,
+[data-theme="dark"] .modal-content h3,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .part-header p,
+[data-theme="dark"] .intro p,
+[data-theme="dark"] .level-description,
+[data-theme="dark"] .section-card p,
+[data-theme="dark"] .feature-item p,
+[data-theme="dark"] .answer-item p,
+[data-theme="dark"] .modal-content p,
+[data-theme="dark"] p {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .drop-zone {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .drop-zone.drag-over {
+    background: #1e3a5f;
+    border-color: #667eea;
+}
+
+[data-theme="dark"] .audio-timeline {
+    background: var(--border-color);
+}
+
+[data-theme="dark"] .progress-bar {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .footer {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+}
+
+/* Keep gradients vibrant in dark mode */
+[data-theme="dark"] .level-card.starters,
+[data-theme="dark"] .test-card.starters {
+    background: linear-gradient(135deg, #2d5f5d 0%, #1e4d5c 100%);
+}
+
+[data-theme="dark"] .level-card.movers,
+[data-theme="dark"] .test-card.movers {
+    background: linear-gradient(135deg, #4a3a6b 0%, #5c4a7a 100%);
+}
+
+[data-theme="dark"] .level-card.flyers,
+[data-theme="dark"] .test-card.flyers {
+    background: linear-gradient(135deg, #6b4a3a 0%, #7a5c4a 100%);
+}
+
+[data-theme="dark"] .part-header {
+    background: linear-gradient(135deg, #2d5f5d 0%, #1e4d5c 100%);
+}
+
+[data-theme="dark"] .score-display {
+    background: linear-gradient(135deg, #2d5f5d 0%, #1e4d5c 100%);
+}
+
+/* Button adjustments for dark mode */
+[data-theme="dark"] .btn-secondary {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+    background: #3d4e5c;
+}
+
+[data-theme="dark"] .back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Answer feedback colors remain distinct */
+[data-theme="dark"] .answer-item.correct {
+    background: #1a3a2a;
+    border-color: #4caf50;
+}
+
+[data-theme="dark"] .answer-item.incorrect {
+    background: #3a1a1a;
+    border-color: #f44336;
+}
+
+/* Names bank and tags */
+[data-theme="dark"] .names-bank {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .level-tag,
+[data-theme="dark"] .test-status {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .test-status.completed {
+    background: #4caf50;
+    color: white;
+}
+
+[data-theme="dark"] .test-status.in-progress {
+    background: #ff9800;
+    color: white;
+}
+
+[data-theme="dark"] .test-count {
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-primary);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .theme-toggle svg {
+        width: 20px;
+        height: 20px;
+    }
+}
